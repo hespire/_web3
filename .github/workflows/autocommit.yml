@@ -41,6 +41,9 @@ jobs:
       run: |
         echo "Auto commit at: $(date)" > last-update.txt
         echo "Commit ID: $RANDOM" >> last-update.txt
+    - name: Show git remote
+      run: |
+        git remote -v
     - name: Dry run push
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
