@@ -41,7 +41,12 @@ jobs:
       run: |
         echo "Auto commit at: $(date)" > last-update.txt
         echo "Commit ID: $RANDOM" >> last-update.txt
-
+    - name: Dry run push
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/hespire/_web3.git
+        git push --dry-run
     - name: Commit and push
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -51,10 +56,5 @@ jobs:
         git add .
         git commit -m "🤖 Random auto-commit at $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes"
         git push https://x-access-token:${GH_TOKEN}@github.com/hespire/_web3.git HEAD:main
-    - name: Dry run push
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      run: |
-        git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/hespire/_web3.git
-        git push --dry-run
+    
 
